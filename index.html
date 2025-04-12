@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Удостоверение личности</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            height: 100%;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100%;
+            overflow-x: hidden;
+            /* Для Chrome Android */
+            overscroll-behavior-y: contain;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+            padding-top: env(safe-area-inset-top, 15px);
+        }
+        
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            position: absolute;
+            left: 15px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .document-card {
+            background-color: white;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        
+        .tab-switcher {
+            display: flex;
+            background-color: #f0f0f0;
+            border-radius: 12px;
+            padding: 3px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            z-index: 1;
+            font-weight: 500;
+        }
+        
+        .tab-slider {
+            position: absolute;
+            width: 50%;
+            height: calc(100% - 6px);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            left: 3px;
+            top: 3px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .document-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .action-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #e0e0e0;
+            padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+        }
+        
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .present-button {
+            background-color: #0060c7;
+            color: white;
+            border: none;
+        }
+        
+        .send-button {
+            background-color: white;
+            color: #0060c7;
+            border: 2px solid #a0c8ff;
+        }
+        
+        .button-icon {
+            width: 27px;
+            height: 27px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+        
+        /* Скрываем scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-button">←</button>
+            <div class="header-title">Удостоверение личности</div>
+        </div>
+        
+        <div class="document-card">
+            <div class="tab-switcher">
+                <div class="tab">Документ</div>
+                <div class="tab">Реквизиты</div>
+                <div class="tab-slider"></div>
+            </div>
+            
+            <div class="tab-content active">
+                <img src="https://yandex-images.clstorage.net/V4JmX7240/036b08_B/cldeQufiTG-MXWdc1ULvyiu2RK1966jZvBMlFxG3o54uEU1LIPI1ZNICxYdJBYQcHwT3M7j7ZkKlBaJQ818_4JdjqxaithgvvB32eESDy_srZpCdvI6MOfjmBbcRItUI_EZqbZJUV9P1oAESPICUCAvBw5AuajVwQxA20aPfiaYC9W6QlPHvuay-dyi0Y1wbG9TxHX3qLEmbISWRlXW3WbzGaH4iBGWgJ7Jysk8QJKsfAlOgnf6HM6DxR6DSj7v2giRcoSSz7cgvLqR49HBPO1kGwy1_-r67StPlM1Zmlfsd1Pp94_eVwtYhgmA_Y_UZbKPCE6z9B0OhsETC8N14ZzL0_zGUkU5qXa4U21RADHl59JItroptWTuSxRNXJUVaPIVpPSLVFFP3QnPA7_Bnec3hAGLe7QWQkEKkYQHPmBST1W3R1PHMSw7_NRtkI9_7aGbRXz3p3pq7wVcCNbaXyn4XSOxQtETgFgKz8LyS9Dud4vBx70yXgEGDheDAfZlUkoS8I2ZQXzudHhX5NcI_CstkQM3vGvzbCvP0QkVFp3t_B0sckkQFAwYRo7OuwLToL5NAcOwe5pGxk0bQQ-25dCKFL8I3cC2YDP4UqTXx3ktrdVAMDpotKnkDVELlBIYKr1QrbwO29dM2kdBw_IHnew-iYQB_3uZjQxLFIsOd25aCds3y9ZOfS-3_9FkU460b-OTiHM6b3DsaYSXhhQe2yh7EqXyBxyfwljDxgn0Cxilfg8LCjr63I-LAVmHS_ct0EGTv0eZg_dn-3dbo10I-eKploF3MKjxbysPGEDc09JgPVknOUnRkYyRj4_Nd8HULP7Egsx1_lFBT0qRBk4yrd1K1DNN3we8Jf7-2-RTjf-k4d4ENvUh8i-kBxjI01aRKHwZpzSLk52IlIGPhTJH06Q0CYIK_LEeBgLNFsOItyBSB1p6BZFJtil_9F1lUAD0JSKSjH__4_mirgNcg9FZkA" 
+                     alt="Документ" 
+                     class="document-image">
+            </div>
+            
+            <div class="tab-content">
+                <div style="padding: 20px; text-align: center; color: #888;">
+                    Информация о реквизитах документа
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-button present-button">
+                <img src="dbfa0c4b.png" class="button-icon" alt="">
+                Предъявить документ
+            </button>
+            <button class="action-button send-button">
+                <img src="https://cdn-icons-png.flaticon.com/512/542/542638.png" class="button-icon" alt="">
+                Отправить документ
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Скрываем адресную строку при загрузке (работает на некоторых устройствах)
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                window.scrollTo(0, 1);
+            }, 0);
+        });
+
+        // Предотвращаем стандартное поведение при касании
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const slider = document.querySelector('.tab-slider');
+        
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Move slider
+                slider.style.left = index === 0 
+                    ? '3px' 
+                    : 'calc(50% + 3px)';
+                
+                // Update active tab content
+                tabContents.forEach(c => c.classList.remove('active'));
+                tabContents[index].classList.add('active');
+            });
+        });
+
+        // Добавляем возможность открыть как PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Показываем кнопку установки PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+    </script>
+</body>
+</html>
